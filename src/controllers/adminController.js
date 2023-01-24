@@ -9,7 +9,7 @@ const createToken = (_id) => {
 }
 
 
-const signup = async (req, res) => {
+const adminSignup = async (req, res) => {
     const { name, email, password } = req.body;
 
     try {
@@ -23,4 +23,4 @@ const signup = async (req, res) => {
     }
 }
 
-export { signup };
+export { adminSignup };

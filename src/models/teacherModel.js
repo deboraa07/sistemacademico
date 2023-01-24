@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const studentSchema = new Schema({
+const teacherSchema = new Schema({
     firstName: {
         type: String,
         required: true,
@@ -27,13 +27,13 @@ const studentSchema = new Schema({
         type: String,
         required: true,
     },
-    course: {
+    degree: {
         type: String,
         required: true,
     },
-}, { timestamps: true } );
+}, { timestamps: true });
 
-studentSchema.statics.signup = async function(firstName, lastName, birth, registration, email, password, course) {
+studentSchema.statics.signup = async function(firstName, lastName, birth, registration, email, password, degree) {
 
     if(!firstName || !lastName || !birth || !registration || !email || !password || !course) {
         throw Error('All fields must be filled')
@@ -61,12 +61,11 @@ studentSchema.statics.signup = async function(firstName, lastName, birth, regist
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
     
-    const user = await this.create({ firstName, lastName, birth, registration, email, password:hash, course });
+    const user = await this.create({ firstName, lastName, birth, registration, email, password:hash, degree });
   
     return user;
 }
 
-const Student = mongoose.model("students", studentSchema);
+const Teacher = mongoose.model("teachers", teacherSchema);
 
-export default Student;
-
+export default Teacher;

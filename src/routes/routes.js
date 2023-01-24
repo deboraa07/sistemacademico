@@ -1,8 +1,14 @@
 import express from 'express'
-import { signup } from '../controllers/adminController.js'
+import { adminSignup } from '../controllers/adminController.js'
+import { studentSignup } from '../controllers/studentController.js';
+import { teacherSignup } from '../controllers/teacherController.js';
 
 const router = express.Router();
 
-router.post('/admin/signup', signup);
+router.post('/admin/signup', adminSignup);
+
+router.post('/student/signup', studentSignup);
+
+router.post('/teacher/signup', teacherSignup);
 
 export { router }
