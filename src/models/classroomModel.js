@@ -18,7 +18,7 @@ const classroomSchema = new Schema({
         required: true,
     },
     teacher: {
-        type: [String],
+        type: String,
         required: true,
     },
 });
