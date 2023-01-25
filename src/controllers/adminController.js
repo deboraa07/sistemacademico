@@ -23,4 +23,18 @@ const adminSignup = async (req, res) => {
     }
 }
 
-export { adminSignup };
+const adminLogin = async (req,res) => {
+    const {email,password} = req.body;
+
+    try {
+        const user = await Admin.login( email, password);
+
+        const token = createToken(user._id)
+
+        res.status(200).json({email, token });
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+}
+
+export { adminSignup, adminLogin};

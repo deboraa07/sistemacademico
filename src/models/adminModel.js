@@ -21,6 +21,27 @@ const adminSchema = new Schema(
     {timestamps:true}
 )
 
+adminSchema.statics.login = async function(email,password){
+  if(!email || !password){
+    throw Error('All fields must be filled')
+  }
+
+  const user = await this.findOne({email});
+
+  if(!user){
+    throw Error('User not registered in the app')
+  };
+
+  const match = await bcrypt.compare(password, user.password);
+  
+  if(!match){
+    throw Error('Incorrect Password')
+  };
+
+  return user
+
+}
+
 adminSchema.statics.signup = async function(name,email,password) {
 
     if(!name || !email || !password){
