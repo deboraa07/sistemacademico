@@ -1,4 +1,4 @@
-import Teacher from "../models/teacherModel";
+import Teacher from "../models/teacherModel.js";
 
 const teacherSignup = async (req, res) => {
     const { firstName, lastName, birth, registration, email, password, degree } = req.body;

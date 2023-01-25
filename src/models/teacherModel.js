@@ -1,4 +1,6 @@
 import mongoose, { Schema } from "mongoose";
+import bcrypt from "bcrypt";
+import validator from 'validator'
 
 const teacherSchema = new Schema({
     firstName: {
@@ -33,7 +35,7 @@ const teacherSchema = new Schema({
     },
 }, { timestamps: true });
 
-studentSchema.statics.signup = async function(firstName, lastName, birth, registration, email, password, degree) {
+teacherSchema.statics.signup = async function(firstName, lastName, birth, registration, email, password, degree) {
 
     if(!firstName || !lastName || !birth || !registration || !email || !password || !course) {
         throw Error('All fields must be filled')
