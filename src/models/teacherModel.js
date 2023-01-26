@@ -35,9 +35,9 @@ const teacherSchema = new Schema({
     },
 }, { timestamps: true });
 
-teacherSchema.statics.signup = async function(firstName, lastName, birth, registration, email, password, degree) {
+teacherSchema.statics.signup = async function(name, registration, email, password) {
 
-    if(!firstName || !lastName || !birth || !registration || !email || !password || !course) {
+    if(!name || !registration || !email || !password) {
         throw Error('All fields must be filled')
     }
     
@@ -63,7 +63,7 @@ teacherSchema.statics.signup = async function(firstName, lastName, birth, regist
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
     
-    const user = await this.create({ firstName, lastName, birth, registration, email, password:hash, degree });
+    const user = await this.create({ name, registration, email, password:hash });
   
     return user;
 }

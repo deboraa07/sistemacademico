@@ -1,10 +1,10 @@
 import Teacher from "../models/teacherModel.js";
 
 const teacherSignup = async (req, res) => {
-    const { firstName, lastName, birth, registration, email, password, degree } = req.body;
+    const { name, registration, email, password } = req.body;
 
     try {
-        const user = await Teacher.signup(firstName, lastName, birth, registration, email, password, degree);
+        const user = await Teacher.signup(name, registration, email, password);
 
         const token = createToken(user._id)
 

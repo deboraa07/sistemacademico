@@ -1,10 +1,11 @@
+import mongoose from "mongoose";
 import Student from "../models/studentModel.js";
 
 const studentSignup = async (req, res) => {
-    const { firstName, lastName, birth, registration, email, password, course } = req.body;
+    const { name, registration, email, password } = req.body;
 
     try {
-        const user = await Student.signup(firstName, lastName, birth, registration, email, password, course);
+        const user = await Student.signup(name, registration, email, password);
 
         const token = createToken(user._id)
 
@@ -14,4 +15,22 @@ const studentSignup = async (req, res) => {
     }
 }
 
-export { studentSignup };
+const getStudent = async (req, res) => {
+    const { registration } = req.params;
+
+    const student = await Student.find({ registration })
+
+    if (!student) {
+        return res.status(404).json({error: "No such student"});
+    }
+
+    res.status(200).json(student);
+}
+
+const getAllStudents = async (req, res) => {
+    const students = await Student.find();
+
+    res.status(200).json(students);
+}
+
+export { studentSignup, getStudent, getAllStudents };

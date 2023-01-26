@@ -5,13 +5,9 @@ const classroomSchema = new Schema({
         type: String,
         required: true,
     },
-    description: {
+    image: {
         type: String,
         required: false,
-    },
-    area: {
-        type: String,
-        required: true,
     },
     students: {
         type: [String],
