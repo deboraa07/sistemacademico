@@ -12,7 +12,7 @@ const teacherSchema = new Schema({
         required: true,
         unique: true,
     },
-    degree: {
+    email: {
         type: String,
         required: true,
     },
