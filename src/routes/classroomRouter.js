@@ -3,6 +3,7 @@ import express from 'express';
 const router = express.Router();
 
 router.get('/student/:id') // retorna lista de todas as classes que um estudante pertence
+router.get('/teacher/:id') // retorna lista de todas as classes que um professor leciona
 router.post('/') // cria uma sala (deve receber ao menos um prof)
 router.post('/student') // adiciona um ou mais estudantes
 router.get('/') // retorna todas as salas

@@ -1,15 +1,14 @@
 import express from 'express';
-import { teacherSignup } from '../controllers/teacherController.js';
+import { createTeacher, getAllTeachers, getTeacher, updateTeacher, deleteTeacher } from '../controllers/teacherController.js';
 
 const router = express.Router();
 
-router.post('/signup', teacherSignup);
-router.post('/login')
+router.get('/:id', getTeacher) // retorna um professor
+router.get('/', getTeacher) // retorna todos os professores
 
-router.get('/:id') // retorna um professor
-router.get('/') // retorna todos os professores
-router.get('/classes/:id') // retorna lista de todas as classes que um professor leciona
-router.put('/:id') // altera info de professor
-router.delete('/:id') // deleta professor
+
+router.post('/', createTeacher) // cria um professor
+router.put('/:id', updateTeacher) // altera info de professor
+router.delete('/:id', deleteTeacher) // deleta professor
 
 export { router as teacherRouter }

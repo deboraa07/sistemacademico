@@ -1,14 +1,15 @@
 import express from 'express'
-import { studentSignup } from '../controllers/studentController.js';
+import { getAllStudents, getStudent, createStudent, deleteStudent, updateStudent } from '../controllers/studentController.js';
 
 const router = express.Router();
 
-router.post('/student/signup', studentSignup);
-router.post('/student/login')
+router.get('/:id', getStudent) // retorna um aluno
+router.get('/', getAllStudents) // retorna todos os alunos
 
-router.get('/:id') // retorna um aluno
-router.get('/') // retorna todos os alunos
-router.put('/:id') // altera info de estudante
-router.delete('/:id') // deleta estudante
+
+
+router.post('/', createStudent) // cria aluno
+router.put('/:id', updateStudent) // altera info de estudante
+router.delete('/:id', deleteStudent) // deleta estudante
 
 export { router as studentRouter }

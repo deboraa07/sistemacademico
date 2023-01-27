@@ -1,15 +1,13 @@
 import mongoose from "mongoose";
 import Student from "../models/studentModel.js";
 
-const studentSignup = async (req, res) => {
-    const { name, registration, email, password } = req.body;
+const createStudent = async (req, res) => {
+    const { name, registration, email } = req.body;
 
     try {
-        const user = await Student.signup(name, registration, email, password);
+        const user = await Student.create(name, registration, email);
 
-        const token = createToken(user._id)
-
-        res.status(200).json({ name, email, token });
+        res.status(201).json(user);
     } catch (error) {
         res.status(400).json({error: error.message});
     }
@@ -33,4 +31,36 @@ const getAllStudents = async (req, res) => {
     res.status(200).json(students);
 }
 
-export { studentSignup, getStudent, getAllStudents };
+const updateStudent = async (req, res) => {
+    const { id } = req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No such student' });
+    }
+
+    const student = await Student.findOneAndUpdate({ _id: id }, {
+        ...req.body
+    });
+
+    if(!student) {
+        return res.status(404).json({ error: 'No such student' });
+    }
+
+    res.status(200).json(student);
+}
+
+const deleteStudent = async (req, res) => {
+    const { id } = req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: 'No such student' });
+    }
+
+    const student = await Student.findByIdAndDelete(id);
+
+    if(!student) return res.status(404).json({ error: 'No such student' });
+
+    res.status(200).json(student);
+}
+
+export { createStudent, getStudent, getAllStudents, updateStudent, deleteStudent };

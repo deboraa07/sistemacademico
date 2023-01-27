@@ -1,9 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import { studentRouter } from "./routes/studentRouter";
-import { teacherRouter } from "./routes/teacherRouter";
-import { classroomRouter } from "./routes/classroomRouter";
+import { studentRouter } from "./routes/studentRouter.js";
+import { teacherRouter } from "./routes/teacherRouter.js";
+import { classroomRouter } from "./routes/classroomRouter.js";
+import { adminRouter } from "./routes/adminRouter.js";
 dotenv.config();
 
 const app = express();
@@ -15,6 +16,7 @@ app.get("/", (req, res) => {
     res.send("Running");
 });
 
+app.use('/api/admin', adminRouter);
 app.use('/api/teacher', teacherRouter);
 app.use('/api/student', studentRouter);
 app.use('/api/classroom', classroomRouter);
