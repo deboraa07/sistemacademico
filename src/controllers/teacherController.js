@@ -4,7 +4,7 @@ const createTeacher = async (req, res) => {
     const { name, registration, email } = req.body;
 
     try {
-        const teacher = await Teacher.create(name, registration, email);
+        const teacher = await Teacher.create({ name, registration, email });
 
         res.status(201).json(teacher);
     } catch (error) {
@@ -15,7 +15,7 @@ const createTeacher = async (req, res) => {
 const getTeacher = async (req, res) => {
     const { registration } = req.params;
 
-    const teacher = await Teacher.find({ registration })
+    const teacher = await Teacher.findOne({ registration })
 
     if (!teacher) {
         return res.status(404).json({error: "No such teacher"});
@@ -31,13 +31,9 @@ const getAllTeachers = async (req, res) => {
 }
 
 const updateTeacher = async (req, res) => {
-    const { id } = req.params;
+    const { registration } = req.params;
 
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'No such teacher' });
-    }
-
-    const teacher = await Teacher.findOneAndUpdate({ _id: id }, {
+    const teacher = await Teacher.findOneAndUpdate({ registration }, {
         ...req.body
     });
 
@@ -45,17 +41,15 @@ const updateTeacher = async (req, res) => {
         return res.status(404).json({ error: 'No such teacher' });
     }
 
-    res.status(200).json(teacher);
+    const updatedTeacher = await Teacher.findOne({ registration });
+
+    res.status(200).json(updatedTeacher);
 }
 
 const deleteTeacher = async (req, res) => {
-    const { id } = req.params;
+    const { registration } = req.params;
 
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'No such teacher' });
-    }
-
-    const teacher = await Teacher.findByIdAndDelete(id);
+    const teacher = await Teacher.findOneAndDelete(registration);
 
     if(!teacher) return res.status(404).json({ error: 'No such teacher' });
 

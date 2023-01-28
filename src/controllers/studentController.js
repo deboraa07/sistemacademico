@@ -1,11 +1,10 @@
-import mongoose from "mongoose";
 import Student from "../models/studentModel.js";
 
 const createStudent = async (req, res) => {
     const { name, registration, email } = req.body;
 
     try {
-        const user = await Student.create(name, registration, email);
+        const user = await Student.create({ name, registration, email });
 
         res.status(201).json(user);
     } catch (error) {
@@ -16,7 +15,7 @@ const createStudent = async (req, res) => {
 const getStudent = async (req, res) => {
     const { registration } = req.params;
 
-    const student = await Student.find({ registration })
+    const student = await Student.findOne({ registration })
 
     if (!student) {
         return res.status(404).json({error: "No such student"});
@@ -32,13 +31,9 @@ const getAllStudents = async (req, res) => {
 }
 
 const updateStudent = async (req, res) => {
-    const { id } = req.params;
+    const { registration } = req.params;
 
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'No such student' });
-    }
-
-    const student = await Student.findOneAndUpdate({ _id: id }, {
+    const student = await Student.findOneAndUpdate({ registration }, {
         ...req.body
     });
 
@@ -46,17 +41,15 @@ const updateStudent = async (req, res) => {
         return res.status(404).json({ error: 'No such student' });
     }
 
-    res.status(200).json(student);
+    const updatedStudent = await Student.findOne({ registration });
+
+    res.status(200).json(updatedStudent);
 }
 
 const deleteStudent = async (req, res) => {
-    const { id } = req.params;
+    const { registration } = req.params;
 
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ error: 'No such student' });
-    }
-
-    const student = await Student.findByIdAndDelete(id);
+    const student = await Student.findOneAndDelete({ registration });
 
     if(!student) return res.status(404).json({ error: 'No such student' });
 

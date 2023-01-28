@@ -3,13 +3,13 @@ import { getAllStudents, getStudent, createStudent, deleteStudent, updateStudent
 
 const router = express.Router();
 
-router.get('/:id', getStudent) // retorna um aluno
+router.get('/:registration', getStudent) // retorna um aluno
 router.get('/', getAllStudents) // retorna todos os alunos
 
 
 
 router.post('/', createStudent) // cria aluno
-router.put('/:id', updateStudent) // altera info de estudante
-router.delete('/:id', deleteStudent) // deleta estudante
+router.put('/:registration', updateStudent) // altera info de estudante
+router.delete('/:registration', deleteStudent) // deleta estudante
 
 export { router as studentRouter }
