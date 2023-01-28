@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/classrooms.css">
+    <title>Suas turmas</title>
+</head>
+<body>
+    <!--Teacher Session-->
+    <div>
+        <h1>Suas turmas</h1>
+
+        <div class="classroom">
+            <img src="https://ciclovivo.com.br/wp-content/uploads/2018/10/iStock-536613027-1024x683.jpg" alt="">
+            <div class="classroom-info">
+                <div>
+                    <p class="classroom-description">Nome da disciplina, Xº Período</p>
+                    <p class="classroom-teacher">Professor: Fulano da Garoinha<p>
+                </div>
+                <div>
+                    <button class="classroom-students" type="button">Ver alunos</button>
+                    <button class="classroom-update" type="button">Alterar dados</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="add-classroom" type="button">+</button>
+
+    <div id="classroom-students-modal-background">
+        <div id="classroom-students-modal">
+            <h2 id="classroom-name"></h2>
+            <div id="classroom-students-name"></div>
+        </div>
+    </div>
+</body>
+</html>

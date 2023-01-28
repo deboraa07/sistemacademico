@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/user_form.css">
+    <link rel="stylesheet" href="../css/classroom_crud.css">
+    <title>Página de alteração das turmas</title>
+</head>
+<body>
+    <form class="user-form" action="/login" method="post">
+        <h1>Ajuste sua turma</h1>
+        <div class="user-form-input">
+            <div>
+                <label for="name">Nome da disciplina</label>
+                <input type="name" id="name" name="classroom-name">
+            </div>
+            <div>
+                <label for="semester">Período</label>
+                <input type="semester" id="semester" name="classroom_semester">
+            </div>
+            <div>
+                <label for="teacher">Professor</label>
+                <input type="teacher" id="teacher" name="classroom_teacher">
+            </div>
+        </div>
+
+        <div id="students">
+            <div class="students-flex">
+                <label for="students">Alunos da turma</label>
+                <button id="add-students" type="button">Adicionar aluno</button>
+            </div>
+            <div id="students-names">
+                <div id="student-name" class="students-flex">
+                    <p>Fulano da Silva Pereira</p>
+                    <button id="remove-student" type="button">x</button>
+                </div>
+                <div id="student-name" class="students-flex">
+                    <p>Fulano da Silva Pereira</p>
+                    <button id="remove-student" type="button">x</button>
+                </div>
+                <div id="student-name" class="students-flex">
+                    <p>Fulano da Silva Pereira</p>
+                    <button id="remove-student" type="button">x</button>
+                </div>
+               </div>
+        </div>
+        <div class="user-form-button">
+            <a href="./classrooms.html">Cancelar</a>
+            <button id="save-button" type="button">Salvar</button>
+        </div>
+    </form>
+    <div id="students-modal">
+        <input id="add-students" name="add-students">
+        <button id="add-students" type="button">Adicionar aluno</button>
+    </div>
+</body>
+</html>
