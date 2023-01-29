@@ -5,12 +5,14 @@ import { studentRouter } from "./routes/studentRouter.js";
 import { teacherRouter } from "./routes/teacherRouter.js";
 import { classroomRouter } from "./routes/classroomRouter.js";
 import { adminRouter } from "./routes/adminRouter.js";
+import cors from 'cors'
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3030; 
 
 app.use(express.json())
+app.use(cors())
 
 app.get("/", (req, res) => {
     res.send("Running");
