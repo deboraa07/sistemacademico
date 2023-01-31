@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,15 +15,19 @@
         <div class="user-form-input">
             <div>
                 <label for="name">Nome da disciplina</label>
-                <input type="name" id="name" name="classroom-name">
+                <input type="text" id="name" name="name">
             </div>
             <div>
                 <label for="semester">Período</label>
-                <input type="semester" id="semester" name="classroom_semester">
+                <input type="number" id="semester" name="semester">
             </div>
             <div>
                 <label for="teacher">Professor</label>
-                <input type="teacher" id="teacher" name="classroom_teacher">
+                <input type="text" id="teacher" name="teacher">
+            </div>
+            <div>
+                <label for="image">Imagem</label>
+                <input type="text" id="image" name="image">
             </div>
         </div>
 
@@ -32,29 +36,22 @@
                 <label for="students">Alunos da turma</label>
                 <button id="add-students" type="button">Adicionar aluno</button>
             </div>
-            <div id="students-names">
-                <div id="student-name" class="students-flex">
-                    <p>Fulano da Silva Pereira</p>
-                    <button id="remove-student" type="button">x</button>
-                </div>
-                <div id="student-name" class="students-flex">
-                    <p>Fulano da Silva Pereira</p>
-                    <button id="remove-student" type="button">x</button>
-                </div>
-                <div id="student-name" class="students-flex">
-                    <p>Fulano da Silva Pereira</p>
-                    <button id="remove-student" type="button">x</button>
-                </div>
-               </div>
+            <div id="students-names"></div>
         </div>
         <div class="user-form-button">
             <a href="./classrooms.html">Cancelar</a>
             <button id="save-button" type="button">Salvar</button>
         </div>
     </form>
-    <div id="students-modal">
-        <input id="add-students" name="add-students">
-        <button id="add-students" type="button">Adicionar aluno</button>
+
+    <div class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <input id="add-student" name="addStudent">
+            <button id="add-student-button" type="button">Adicionar aluno</button>
+        </div>
     </div>
+
+    <script type="module" src="../js/classroom_crud.js"></script>
 </body>
 </html>

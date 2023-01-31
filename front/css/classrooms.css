@@ -1,8 +1,7 @@
 h1 {
     font-size: 3.6rem;
-    text-align: center;
     color: var(--primary-white);
-    margin: 48px 0; 
+    margin: 18px 0; 
 }
 
 .classroom {
@@ -49,15 +48,17 @@ h1 {
 .classroom-update {
     font-style: italic;
     font-weight: 700;
-    display: none;
 }
 
 .add-classroom {
+    /* display: none; */
     font-size: 3.6rem;
+    text-align: center;
     position: fixed;
     bottom: 10%;
     right: 10%;
     background-color: var(--secondary-background-color);
+    border: none;
     border-radius: 100%;
     height: 40px;
     width: 40px;
@@ -72,30 +73,14 @@ h1 {
     padding: 70px;
 }
 
-#classroom-students-modal-background {
-    display: none;
-    position: fixed;
-    background-color: var(--opacity-black);
-    height: 100vh;
-    width: 100vw;
-    top: 0;
-    left: 0;
-}
-
-#classroom-students-modal {
+#classrooms {
     display: flex;
     flex-direction: column;
-    gap: 36px;
-    position: fixed;
-    background-color: var(--primary-white);
-    border-radius: 30px;
-    top: 50%;
-    right: 50%;
-    transform: translate(50%, -50%);
-    padding: 24px 60px;
+    align-items: center;
+    gap: 30px;
 }
 
-#classroom-students-modal h2 {
+#classroom-name {
     text-align: center;
     font-size: 3.6rem;
 }
@@ -104,4 +89,8 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 24px;
+    max-height: 400px;
+    width: 100%;
+    padding-right: 12px;
+    overflow: scroll;
 }

@@ -37,33 +37,6 @@
     outline: none;
 }
 
-.user-form-check {
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 16px;
-}
-
-.user-form-check > div {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.user-form-check input {
-    border-color: var(--primary-black);
-    height: 30px;
-    width: 30px;
-}
-
-.user-form-check input:checked:after {
-    content: '';
-    display: inline-block;
-    background-color: var(--primary-black);
-    border-radius: 100%;
-    width: 30px;
-    height: 30px;
-}
-
 .user-form-button {
     display: flex;
     justify-content: space-evenly;
