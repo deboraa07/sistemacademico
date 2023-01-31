@@ -1,5 +1,6 @@
 import express from 'express';
-import { getClassroom, getAllClassrooms, createClassroom, updateClassroom, deleteClassroom, addStudents } from "../controllers/classroomController.js";
+import { getClassroom, getAllClassrooms, createClassroom, updateClassroom, deleteClassroom, addStudents, getTeacherClassrooms, getStudentClassrooms } from "../controllers/classroomController.js";
+import { checkAuth } from "../middleware/requireAuth.js"
 
 const router = express.Router();
 
@@ -10,7 +11,8 @@ router.get('/:id', getClassroom) // retorna uma sala
 
 
 
-router.post('/', createClassroom) // cria uma sala (deve receber ao menos um prof)
+router.use(checkAuth)
+router.post('/',createClassroom) // cria uma sala (deve receber ao menos um prof)
 router.post('/:id/students/', addStudents) // adiciona um ou mais estudantes
 router.put('/:id', updateClassroom) // altera info de uma sala
 router.delete('/:id', deleteClassroom) // deleta uma sala

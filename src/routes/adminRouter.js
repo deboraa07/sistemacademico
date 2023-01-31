@@ -3,7 +3,7 @@ import { adminSignup, adminLogin } from '../controllers/adminController.js'
 
 const router = express.Router();
 
-router.post('/admin/signup', adminSignup);
-router.post('/admin/login', adminLogin);
+router.post('/signup', adminSignup);
+router.post('/login', adminLogin);
 
 export { router as adminRouter }

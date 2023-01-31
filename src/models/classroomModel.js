@@ -17,6 +17,10 @@ const classroomSchema = new Schema({
         type: String,
         required: true,
     },
+    semester: {
+        type: Number,
+        required: true
+    }
 });
 
 const Classroom = mongoose.model("classrooms", classroomSchema);
