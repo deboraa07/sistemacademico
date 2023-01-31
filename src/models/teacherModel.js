@@ -16,6 +16,10 @@ const teacherSchema = new Schema({
         type: String,
         required: true,
     },
+    phoneNumber: {
+        type: String,
+        required: true,
+    },
 }, { timestamps: true });
 
 const Teacher = mongoose.model("teachers", teacherSchema);

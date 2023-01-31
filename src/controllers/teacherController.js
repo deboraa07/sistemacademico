@@ -1,10 +1,10 @@
 import Teacher from "../models/teacherModel.js";
 
 const createTeacher = async (req, res) => {
-    const { name, registration, email } = req.body;
+    const { name, registration, email, phoneNumber } = req.body;
 
     try {
-        const teacher = await Teacher.create({ name, registration, email });
+        const teacher = await Teacher.create({ name, registration, email, phoneNumber });
 
         res.status(201).json(teacher);
     } catch (error) {

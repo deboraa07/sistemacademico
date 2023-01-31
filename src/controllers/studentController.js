@@ -1,10 +1,10 @@
 import Student from "../models/studentModel.js";
 
 const createStudent = async (req, res) => {
-    const { name, registration, email } = req.body;
+    const { name, registration, email, phoneNumber } = req.body;
 
     try {
-        const user = await Student.create({ name, registration, email });
+        const user = await Student.create({ name, registration, email, phoneNumber });
 
         res.status(201).json(user);
     } catch (error) {

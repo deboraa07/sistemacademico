@@ -1,10 +1,17 @@
 import Classroom from "../models/classroomModel.js";
 import mongoose from "mongoose";
+import getStudentAndTeacher from "../helpers/getStudentAndTeacher.js";
 
 const getAllClassrooms = async (req, res) => {
     const classrooms = await Classroom.find();
     
-    res.status(200).json(classrooms);
+    const updatedClassrooms = [];
+
+    for (let i = 0; i < classrooms.length; i++) {
+        updatedClassrooms.push(await getStudentAndTeacher(classrooms[i]));
+    }
+    
+    res.status(200).json(updatedClassrooms);
 }
 
 const getClassroom = async (req, res) => {
@@ -16,7 +23,9 @@ const getClassroom = async (req, res) => {
         return res.status(404).json({error: "No such classroom"});
     }
 
-    res.status(200).json(classroom);
+    const updatedClassroom = await getStudentAndTeacher(classroom);
+
+    res.status(200).json(updatedClassroom);
 }
 
 const createClassroom = async (req, res) => {
