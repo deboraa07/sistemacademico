@@ -1,16 +1,8 @@
 import { baseLocalUrl, localStorageClassroomKey } from "./constants.js";
-import { openModal } from "./utils.js";
+import { openModal, buildButton } from "./utils.js";
 
 const qs = element => document.querySelector(element);
 const ce = element => document.createElement(element);
-
-const createButton = (className, text, onClick) => {
-    const button = ce("button");
-    button.classList.add(className);
-    button.textContent = text;
-    button.addEventListener("click", onClick);
-    return button;
-}
 
 const renderClassroomStudents = classroom => {
     const parent = qs(".modal-content");
@@ -62,8 +54,8 @@ const renderClassrooms = classrooms => {
         infoTextDiv.appendChild(teacherInfo);
 
         const infoButtonDiv = ce("div");
-        const studentsButton = createButton("classroom-students", "Ver alunos", () => renderClassroomStudents(classroom));
-        const updateButton = createButton("classroom-update", "Alterar dados", () => updateClassroom(classroom));
+        const studentsButton = buildButton("classroom-students", "Ver alunos", () => renderClassroomStudents(classroom));
+        const updateButton = buildButton("classroom-update", "Alterar dados", () => updateClassroom(classroom));
         infoButtonDiv.appendChild(studentsButton);
         infoButtonDiv.appendChild(updateButton);
 

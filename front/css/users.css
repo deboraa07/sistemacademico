@@ -1,0 +1,59 @@
+h1 {
+    font-size: 3.6rem;
+    text-align: center;
+    color: var(--primary-white);
+    margin: 24px 48px;
+}
+
+h2 {
+    text-align: center;
+}
+
+.teacher, .student {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--primary-black);
+    padding: 0 10px;
+}
+
+.user-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.action-link {
+    background-color: var(--secondary-background-color);
+    border: 3px solid var(--primary-black);
+    border-radius: 5px;
+    padding: 12px 24px;
+}
+
+#users {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+}
+
+#teachers, #students {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    background-color: var(--primary-white);
+    border-radius: 30px;
+    height: 60vh;
+    width: 48%;
+    padding: 24px;
+    overflow-y: scroll;
+}
+
+#navigation-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4%;
+    width: 90%;
+    margin-top: 48px;
+}

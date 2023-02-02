@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/user_form.css">
+    <title>Definir pessoa</title>
+</head>
+<body>
+    <form class="user-form">
+        <h1>Adicione um professor ou aluno</h1>
+        <div class="user-form-input">
+            <div>
+                <label for="name">Nome</label>
+                <input type="text" id="name" name="name">
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email">
+            </div>
+            <div>
+                <label for="enrollment">Matrícula</label>
+                <input type="text" id="enrollment" name="enrollment">
+            </div>
+            <div>
+                <label for="phoneNumber">Número de telefone</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" placeholder="(00) 0 0000-0000">
+            </div>
+        </div>
+
+        <div>
+            <label>Cargo</label>
+            <div class="user-form-check">
+                <div>
+                    <input type="radio" name="role" value="teacher">
+                    <label for="teacher">Professor</label>
+                </div>
+                <div>
+                    <input type="radio" name="role" value="student">
+                    <label for="student">Aluno</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-form-button">
+            <a href="../html/users.html">Cancelar</a>
+            <button id="save-button" type="button">Salvar</button>
+        </div>
+    </form>
+
+    <script type="module" src="../js/user_crud.js"></script>
+</body>
+</html>

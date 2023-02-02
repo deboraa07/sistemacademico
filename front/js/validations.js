@@ -19,6 +19,8 @@ const inputValidationFunctions = () => {
     
     const password = data => hasText(data.password);
 
+    const phoneNumber = data => data.phoneNumber.split("").filter(character => !isNaN(parseInt(character))).join("").length === 11;
+
     const semester = data => data.semester > 0;
     
     const teacher = data => hasText(data.teacher);
@@ -31,8 +33,9 @@ const inputValidationFunctions = () => {
         image,
         name,
         password,
+        phoneNumber,
         semester,
-        teacher,
+        teacher
     };
 }
 

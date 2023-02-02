@@ -28,7 +28,7 @@ const renderStudents = () => {
 
         const button = ce("button");
         button.textContent = "x";
-        button.classList.add("remove-student");
+        button.classList.add("remove-button");
         button.addEventListener("click", () => {
             formData.students = formData.students.filter(formStudent => formStudent !== student);
             renderStudents();
@@ -53,12 +53,7 @@ const getInformation = () => {
 
     if (Object.keys(classroom).length === 0) return;
 
-    formData.name = classroom.name;
-    formData.image = classroom.image;
-    formData.semester = classroom.semester;
-    formData.teacher = classroom.teacher;
-    formData.students = classroom.students;
-
+    Object.keys(formData).forEach(key => formData[key] = classroom[key]);
     updateForm();
 }
 
