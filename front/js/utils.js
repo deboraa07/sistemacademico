@@ -24,10 +24,17 @@ const getToken = () => {
 
 const checkAuthorization = () => getToken() ? null : window.location.href = `${baseLocalUrl}`;
 
+const getBaseUrl = () => {
+    const origin = window.location.origin  + "/";
+    const pathname = window.location.pathname.split("/").find(string => !!string && !string.includes("index.html") && !string.includes("front"));
+    return origin + (pathname ? pathname + "/" : ""); 
+}
+
 export {
     closeModal,
     openModal,
     buildButton,
     getToken,
-    checkAuthorization
+    checkAuthorization,
+    getBaseUrl
 };

@@ -1,4 +1,6 @@
-const baseLocalUrl = window.location.origin + "/";
+import { getBaseUrl } from "./utils.js";
+
+const baseLocalUrl = getBaseUrl();
 const localStorageClassroomKey = "classroomInformation";
 const localStorageUserKey = "userInformation";
 
