@@ -1,4 +1,4 @@
-const baseLocalUrl = "http://127.0.0.1:5500/";
+const baseLocalUrl = window.location.origin + "/";
 const localStorageClassroomKey = "classroomInformation";
 const localStorageUserKey = "userInformation";
 
