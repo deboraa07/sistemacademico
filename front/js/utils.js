@@ -1,3 +1,5 @@
+import { baseLocalUrl } from "./constants.js";
+
 const closeModal = () => document.querySelector(".modal").style.display = "none";
 const openModal = () => {
     document.querySelector(".modal").style.display = "flex";
@@ -20,9 +22,12 @@ const getToken = () => {
     return cookies.split("token=")[1].split(";")[0];
 }
 
+const checkAuthorization = () => getToken() ? null : window.location.href = `${baseLocalUrl}`;
+
 export {
     closeModal,
     openModal,
     buildButton,
-    getToken
+    getToken,
+    checkAuthorization
 };

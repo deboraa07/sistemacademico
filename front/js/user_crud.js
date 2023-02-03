@@ -1,7 +1,7 @@
 import { baseLocalUrl, localStorageUserKey } from "./constants.js";
 import { getAndValidateForm } from "./forms.js";
 import { createStudent, createTeacher, updateStudent, updateTeacher } from "./requests.js";
-import { getToken } from "./utils.js";
+import { checkAuthorization, getToken } from "./utils.js";
 
 const qs = element => document.querySelector(element);
 const ge = element => Array.from(document.getElementsByName(element));
@@ -65,5 +65,6 @@ const saveUser = async () => {
     }
 }
 
+checkAuthorization();
 qs("#save-button").addEventListener("click", saveUser);
 getInformation();

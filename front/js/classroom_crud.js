@@ -1,8 +1,9 @@
 import { baseLocalUrl, localStorageClassroomKey } from "./constants.js";
 import { getAndValidateForm } from "./forms.js";
-import { closeModal, openModal, getToken } from "./utils.js";
+import { closeModal, openModal, getToken, checkAuthorization } from "./utils.js";
 import { inputValidationFunctions } from "./validations.js";
-import { createClassroom, updateClassroom } from "./requests.js";
+import { createClassroom, getStudent, updateClassroom } from "./requests.js";
+import { fromBackToFront } from "./translator.js";
 
 const qs = element => document.querySelector(element);
 const ce = element => document.createElement(element);
@@ -27,11 +28,11 @@ const renderStudents = () => {
         div.classList.add("student-name");
 
         const p = ce("p");
-        p.textContent = student;
+        p.textContent = student.name;
 
         const button = ce("button");
         button.textContent = "x";
-        button.classList.add("remove-button");
+        button.classList.add("delete-button");
         button.addEventListener("click", () => {
             formData.students = formData.students.filter(formStudent => formStudent !== student);
             renderStudents();
@@ -55,6 +56,7 @@ const getInformation = () => {
     if (Object.keys(parsedClassroom).length === 0) return;
 
     Object.keys(formData).forEach(key => formData[key] = parsedClassroom[key]);
+    formData.teacher = parsedClassroom.teacher.enrollment;
     updateForm();
 }
 
@@ -62,6 +64,9 @@ const saveClassroom = async () => {
     const data = getAndValidateForm();
 
     if (!data) return;
+    if (!!parsedClassroom.id) data.id = parsedClassroom.id;
+    
+    data.students = [...formData.students].map(student => student.enrollment);
 
     const request = Object.keys(parsedClassroom).length === 0 ? createClassroom : updateClassroom;
 
@@ -73,7 +78,7 @@ const saveClassroom = async () => {
     }
 }
 
-const addStudent = () => {
+const addStudent = async () => {
     const studentName = qs("#add-student").name;
     const studentValue = qs("#add-student").value;
     const data = {[studentName]: studentValue}
@@ -82,8 +87,9 @@ const addStudent = () => {
     if (!validations[studentName](data)) return;
 
     try {
-        formData.students.push(studentValue);
-        formData.students.sort();
+        const student = await getStudent({enrollment: studentValue}).then(response => fromBackToFront(response));
+        formData.students.push(student);
+        formData.students.sort((a, b) => a.name.localeCompare(b.name));
         renderStudents();
     } catch (error) {
         window.alert(`Ops, algo deu errado. Por favor, tente novamente em instantes. Informações sobre o erro: ${error}`);
@@ -93,6 +99,7 @@ const addStudent = () => {
     }
 }
 
+checkAuthorization();
 qs("#save-button").addEventListener("click", saveClassroom);
 qs("#add-students").addEventListener("click", openModal);
 qs("#add-student-button").addEventListener("click", addStudent);

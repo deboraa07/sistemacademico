@@ -1,7 +1,7 @@
 import { baseLocalUrl, localStorageUserKey } from "./constants.js";
 import { deleteStudent, deleteTeacher, getStudents, getTeachers } from "./requests.js";
 import { fromBackToFront } from "./translator.js";
-import { buildButton, getToken } from "./utils.js";
+import { buildButton, checkAuthorization, getToken } from "./utils.js";
 
 const qs = element => document.querySelector(element);
 const ce = element => document.createElement(element);
@@ -88,6 +88,7 @@ const loadStudents = async () => {
     }
 }
 
+checkAuthorization();
 loadTeachers();
 loadStudents();
 localStorage.setItem(localStorageUserKey, JSON.stringify({}));

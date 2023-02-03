@@ -1,4 +1,4 @@
-import { baseApiUrl } from "./constants.js";
+import apiUrl from "./api_url.js";
 import { fromFrontToBack } from "./translator.js";
 
 const adminPath =  "api/admin/";
@@ -15,7 +15,7 @@ const buildRequestObject = ({method, body, authorization}) => {
 }
 
 const request = async (path, object) => {
-    const apiResponse = await fetch(`${baseApiUrl}${path}`, object).then(response => response.json());
+    const apiResponse = await fetch(`${apiUrl}${path}`, object).then(response => response.json());
 
     if (apiResponse.error) throw new Error(apiResponse.error);
 
@@ -26,6 +26,7 @@ const signup = async (data) => request(`${adminPath}signup`, buildRequestObject(
 const login = async (data) => request(`${adminPath}login`, buildRequestObject({method: "POST", body: data}));
 
 const getStudents = async () => request(`${studentPath}`, buildRequestObject({method: "GET"}));
+const getStudent = async (data) => request(`${studentPath}${data.enrollment}`, buildRequestObject({method: "GET"}));
 const createStudent = async (data, authorization) => request(`${studentPath}`, buildRequestObject({method: "POST", body: data, authorization}));
 const updateStudent = async (data, authorization) => request(`${studentPath}${data.enrollment}`, buildRequestObject({method: "PUT", body: data, authorization}));
 const deleteStudent = async (data, authorization) => request(`${studentPath}${data.enrollment}`, buildRequestObject({method: "DELETE", authorization}));
@@ -45,6 +46,7 @@ export {
     login,
 
     getStudents,
+    getStudent,
     createStudent,
     updateStudent,
     deleteStudent,

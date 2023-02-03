@@ -1,12 +1,13 @@
 import { baseLocalUrl, localStorageClassroomKey } from "./constants.js";
-import { openModal, buildButton } from "./utils.js";
+import { openModal, buildButton, getToken } from "./utils.js";
 import { fromBackToFront } from "./translator.js";
-import { deleteClassroom as fetchDelete } from "./requests.js";
+import { deleteClassroom as fetchDelete, getClassrooms } from "./requests.js";
 
 const qs = element => document.querySelector(element);
 const ce = element => document.createElement(element);
 
 let classrooms = [];
+const token = getToken();
 
 const renderClassroomStudents = classroom => {
     const parent = qs(".modal-content");
@@ -23,7 +24,7 @@ const renderClassroomStudents = classroom => {
     
     classroom.students.forEach(student => {
         const p = ce("p");
-        p.textContent = student;
+        p.textContent = student.name;
         div.appendChild(p);
     });
 
@@ -37,7 +38,7 @@ const updateClassroom = classroom => {
 
 const deleteClassroom = async (classroom) => {
     try {
-        // await fetchDelete(classroom);
+        await fetchDelete(classroom, token);
         classrooms = [...classrooms].filter(currentClassrom => currentClassrom !== classroom);
 
         renderClassrooms();
@@ -65,16 +66,16 @@ const renderClassrooms = () => {
         const commonInfo = ce("p");
         commonInfo.textContent = `${classroom.name}, ${classroom.semester}º Período`;
         const teacherInfo = ce("p");
-        teacherInfo.textContent = `Professor: ${classroom.teacher}`;
+        teacherInfo.textContent = `Professor: ${classroom.teacher.name}`;
         infoTextDiv.appendChild(commonInfo);
         infoTextDiv.appendChild(teacherInfo);
 
         const infoButtonDiv = ce("div");
+        const studentsButton = buildButton("classroom-students", "Ver alunos", () => renderClassroomStudents(classroom));
+        infoButtonDiv.appendChild(studentsButton);
         if (document.cookie.includes("token=")){
-            const studentsButton = buildButton("classroom-students", "Ver alunos", () => renderClassroomStudents(classroom));
             const updateButton = buildButton("classroom-update", "Alterar dados", () => updateClassroom(classroom));
             const deleteButton = buildButton("delete-classroom", "Deletar turma", () => deleteClassroom(classroom));
-            infoButtonDiv.appendChild(studentsButton);
             infoButtonDiv.appendChild(updateButton);
             infoButtonDiv.appendChild(deleteButton);
         }
@@ -89,24 +90,20 @@ const renderClassrooms = () => {
     });
 }
 
-const loadPage = () => {
-    const apiClassrooms = [
-        {
-            image: "https://ciclovivo.com.br/wp-content/uploads/2018/10/iStock-536613027-1024x683.jpg",
-            name: "Programação Web 1",
-            semester: 4,
-            teacher: "Severo Snape",
-            students: ["Artur", "Caio", "Débora", "Immanuel"]
-        },
-        {
-            image: "https://storage.googleapis.com/dpw/app/uploads/2019/04/lazy-loading-nativo-imagens-iframes_.jpg",
-            name: "Testes de Software",
-            semester: 4,
-            teacher: "Diogo Moreira",
-            students: ["Artur", "Caio", "Débora", "Immanuel"]
-        }
-    ].map(classroom => fromBackToFront(classroom));
-    apiClassrooms.forEach(classroom => classrooms.push(classroom));
+const loadPage = async () => {
+    if (document.cookie.includes("token=")){
+        qs(".add-classroom").style.display = "block";
+        qs("#see-users").style.display = "block";
+    }
+
+    const apiClassrooms = await getClassrooms();
+    apiClassrooms.forEach(classroom => {
+        const formattedClassroom = fromBackToFront(classroom);
+        formattedClassroom.students = classroom.students.map(fromBackToFront);
+        formattedClassroom.teacher = fromBackToFront(classroom.teacher);
+
+        classrooms.push(fromBackToFront(formattedClassroom));
+    });
 
     renderClassrooms();
     localStorage.setItem(localStorageClassroomKey, JSON.stringify({}));

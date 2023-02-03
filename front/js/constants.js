@@ -1,5 +1,4 @@
 const baseLocalUrl = "http://127.0.0.1:5500/";
-const baseApiUrl = "http://localhost:4000/";
 const localStorageClassroomKey = "classroomInformation";
 const localStorageUserKey = "userInformation";
 
@@ -17,7 +16,6 @@ const inputsTranslations = {
 
 export {
     baseLocalUrl,
-    baseApiUrl,
     localStorageClassroomKey,
     localStorageUserKey,
     inputsTranslations
