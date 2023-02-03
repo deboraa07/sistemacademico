@@ -1,17 +1,18 @@
 import { baseLocalUrl, localStorageUserKey } from "./constants.js";
-import { deleteStudent, deleteTeacher, getTeachers } from "./requests.js";
+import { deleteStudent, deleteTeacher, getStudents, getTeachers } from "./requests.js";
 import { fromBackToFront } from "./translator.js";
-import { buildButton } from "./utils.js";
+import { buildButton, getToken } from "./utils.js";
 
 const qs = element => document.querySelector(element);
 const ce = element => document.createElement(element);
 
 const usersData = [];
+const token = getToken();
 
 const deleteUser = async (user) => {
     try {
         const deleteFunction = user.role === "teacher" ? deleteTeacher : deleteStudent;
-        // deleteFunction(user);
+        await deleteFunction(user, token);
 
         const newUsersData = usersData.filter(userData => userData.id !== user.id);
         usersData.length = 0;
@@ -59,22 +60,7 @@ const renderUsers = (role, users) => {
 
 const loadTeachers = async () => {
     try {
-        const teachers = [
-            {
-                _id: "1",
-                name: "a",
-                registration: "1",
-                email: "a@a.a",
-                phoneNumber: "00 0 00000000"
-            },
-            {
-                _id: "2",
-                name: "b",
-                registration: "2",
-                email: "b@b.b",
-                phoneNumber: "00 0 00000000"
-            }
-        ]; // getTeachers();
+        const teachers = await getTeachers();
         const translatedTeachers = teachers.map(teacher => {
             teacher.role = "teacher";
             return fromBackToFront(teacher);
@@ -82,36 +68,14 @@ const loadTeachers = async () => {
 
         translatedTeachers.forEach(teacher => usersData.push(teacher));
         renderUsers("teacher", translatedTeachers);
-    } catch {
-        window.alert("Ops, algo deu errado. Por favor, tente novamente em instantes.");
+    } catch (error) {
+        window.alert(`Ops, algo deu errado. Por favor, tente novamente em instantes. Informações sobre o erro: ${error}`);
     }
 }
 
 const loadStudents = async () => {
     try {
-        const students = [
-            {
-                _id: "3",
-                name: "c",
-                registration: "3",
-                email: "c@c.c",
-                phoneNumber: "00 0 00000000"
-            },
-            {
-                _id: "4",
-                name: "d",
-                registration: "4",
-                email: "d@d.d",
-                phoneNumber: "00 0 00000000"
-            },
-            {
-                _id: "5",
-                name: "e",
-                registration: "5",
-                email: "e@e.e",
-                phoneNumber: "00 0 00000000"
-            }
-        ]; // getStudents();
+        const students = await getStudents();
         const translatedStudents = students.map(student => {
             student.role = "student";
             return fromBackToFront(student);
@@ -119,8 +83,8 @@ const loadStudents = async () => {
 
         translatedStudents.forEach(student => usersData.push(student));
         renderUsers("student", translatedStudents);
-    } catch {
-        window.alert("Ops, algo deu errado. Por favor, tente novamente em instantes.");
+    } catch (error) {
+        window.alert(`Ops, algo deu errado. Por favor, tente novamente em instantes. Informações sobre o erro: ${error}`);
     }
 }
 

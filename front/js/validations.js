@@ -17,7 +17,25 @@ const inputValidationFunctions = () => {
 
     const name = data => hasText(data.name);
     
-    const password = data => hasText(data.password);
+    const password = data => {
+        if (!hasText(data.password)) return false;
+
+        const characterValidation = {
+            upper: false,
+            lower: false,
+            number: false,
+            special: false
+        };
+
+        data.password.split("").forEach(character => {
+            if (!isNaN(parseInt(character))) characterValidation.number = true;
+            else if (character.toUpperCase() === character.toLowerCase()) characterValidation.special = true;
+            else if (character === character.toUpperCase()) characterValidation.upper = true;
+            else if (character === character.toLowerCase()) characterValidation.lower = true;
+        });
+
+        return Object.keys(characterValidation).reduce((bool, key) => bool && characterValidation[key], true);
+    };
 
     const phoneNumber = data => data.phoneNumber.split("").filter(character => !isNaN(parseInt(character))).join("").length === 11;
 

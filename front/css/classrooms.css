@@ -50,6 +50,14 @@ h1 {
     font-weight: 700;
 }
 
+.delete-classroom {
+    color: var(--primary-white);
+    background-color: var(--primary-red);
+    border: none;
+    border-radius: 10px;
+    padding: 6px 12px;
+}
+
 .add-classroom {
     /* display: none; */
     font-size: 3.6rem;
@@ -86,6 +94,7 @@ h1 {
     background-color: var(--primary-white);
     border-radius: 30px;
     padding: 12px 24px;
+    margin-bottom: 36px;
 }
 
 #classroom-name {

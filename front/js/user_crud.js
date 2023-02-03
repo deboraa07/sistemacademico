@@ -1,6 +1,7 @@
-import { localStorageUserKey } from "./constants.js";
+import { baseLocalUrl, localStorageUserKey } from "./constants.js";
 import { getAndValidateForm } from "./forms.js";
 import { createStudent, createTeacher, updateStudent, updateTeacher } from "./requests.js";
+import { getToken } from "./utils.js";
 
 const qs = element => document.querySelector(element);
 const ge = element => Array.from(document.getElementsByName(element));
@@ -13,6 +14,7 @@ const userData = {
     role: ""
 };
 const parsedUser = JSON.parse(localStorage.getItem(localStorageUserKey));
+const token = getToken();
 
 const updateForm = () => Object.keys(userData).filter(key => key !== "role").forEach(key => qs(`#${key}`).value = userData[key]);
 
@@ -56,10 +58,10 @@ const saveUser = async () => {
     if (!request) return;
 
     try {
-        // request(data);
-        // window.location.href = `${baseLocalUrl}front/html/users.html`;
-    } catch {
-        window.alert("Ops, algo deu errado. Por favor, tente novamente em instantes.");
+        await request(data, token);
+        window.location.href = `${baseLocalUrl}front/html/users.html`;
+    } catch (error) {
+        window.alert(`Ops, algo deu errado. Por favor, tente novamente em instantes. Informações sobre o erro: ${error}`);
     }
 }
 

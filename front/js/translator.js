@@ -8,7 +8,7 @@ const fromFrontToBack = data => {
     const keys = Object.keys(frontBackKeysTranslations);
 
     Object.keys(data).forEach(key => keys.includes(key) ? backData[frontBackKeysTranslations[key]] = data[key] : backData[key] = data[key]);
-    return backData;
+    return JSON.stringify(backData);
 }
 
 const fromBackToFront = data => {

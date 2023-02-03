@@ -12,8 +12,17 @@ const buildButton = (className, text, onClick) => {
     return button;
 }
 
+const getToken = () => {
+    const cookies = document.cookie;
+
+    if (!cookies.includes("token=")) return null;
+
+    return cookies.split("token=")[1].split(";")[0];
+}
+
 export {
     closeModal,
     openModal,
-    buildButton
+    buildButton,
+    getToken
 };
