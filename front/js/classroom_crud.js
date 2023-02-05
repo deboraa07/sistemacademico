@@ -1,8 +1,8 @@
 import { baseLocalUrl, localStorageClassroomKey } from "./constants.js";
 import { getAndValidateForm } from "./forms.js";
-import { closeModal, openModal, getToken, checkAuthorization } from "./utils.js";
+import { closeModal, openModal, getToken, checkAuthorization, buildDefaultOption, buildOption } from "./utils.js";
 import { inputValidationFunctions } from "./validations.js";
-import { createClassroom, getStudent, updateClassroom } from "./requests.js";
+import { createClassroom, getStudent, getStudents, getTeachers, updateClassroom } from "./requests.js";
 import { fromBackToFront } from "./translator.js";
 
 const qs = element => document.querySelector(element);
@@ -15,16 +15,17 @@ const formData = {
     teacher: "",
     students: []
 };
+const students = [];
 const parsedClassroom = JSON.parse(localStorage.getItem(localStorageClassroomKey));
 const token = getToken();
 
 const renderStudents = () => {
-    const parent = qs("#students-names");
+    const parent = qs("#see-students-names");
     parent.innerHTML = "";
 
     formData.students.forEach(student => {
         const div = ce("div");
-        div.classList.add("students-flex");
+        div.classList.add("see-students-flex");
         div.classList.add("student-name");
 
         const p = ce("p");
@@ -46,10 +47,10 @@ const renderStudents = () => {
 
 const updateForm = () => {
     Object.keys(formData)
-        .filter(key => key !== "students")
+        .filter(key => !["students", "teacher"].includes(key))
         .forEach(key => qs(`#${key}`).value = formData[key]);
     
-    renderStudents();
+        renderStudents();
 }
 
 const getInformation = () => {
@@ -58,6 +59,46 @@ const getInformation = () => {
     Object.keys(formData).forEach(key => formData[key] = parsedClassroom[key]);
     formData.teacher = parsedClassroom.teacher.enrollment;
     updateForm();
+}
+
+const setTeachers = async () => {
+    const parent = qs("#teacher");
+    parent.innerHTML = "";
+
+    if (!formData.teacher) parent.appendChild(buildDefaultOption("Selecione um professor"));
+    
+    try {
+        const options = await getTeachers().then(response => response.map(teacher => fromBackToFront(teacher)));
+
+        options.forEach(option => {
+            const isSelected = option.enrollment === formData.teacher;
+            parent.appendChild(buildOption(option.name, option.enrollment, isSelected));
+        });
+    } catch (error) {
+        window.alert(`Ops, algo deu errado. Por favor, tente novamente em instantes. Informações sobre o erro: ${error.message}`);
+    }
+}
+
+const setStudents = async () => {
+    const parent = qs("#students");
+    parent.innerHTML = "";
+    parent.appendChild(buildDefaultOption("Selecione um aluno"));
+
+    try {
+        if (students.length === 0){
+            const options = await getStudents().then(response => response.map(student => fromBackToFront(student)));
+            options.forEach(option => students.push(option));
+            students.sort((a, b) => a.name.localeCompare(b.name));
+        }
+        
+        students
+            .filter(student => !formData.students.map(formDataStudent => formDataStudent.enrollment).includes(student.enrollment))
+            .forEach(student => parent.appendChild(buildOption(student.name, student.enrollment, false)));
+        
+        openModal();
+    } catch (error) {
+        window.alert(`Ops, algo deu errado. Por favor, tente novamente em instantes. Informações sobre o erro: ${error.message}`);
+    }
 }
 
 const saveClassroom = async () => {
@@ -79,28 +120,24 @@ const saveClassroom = async () => {
 }
 
 const addStudent = async () => {
-    const studentName = qs("#add-student").name;
-    const studentValue = qs("#add-student").value;
-    const data = {[studentName]: studentValue}
-    const validations = inputValidationFunctions();
+    const selectedStudent = Array.from(qs("select[name=students]").options).find(option => option.selected === true).value;
 
-    if (!validations[studentName](data)) return;
+    if (!inputValidationFunctions().addStudent({addStudent: selectedStudent})) return;
 
     try {
-        const student = await getStudent({enrollment: studentValue}).then(response => fromBackToFront(response));
-        formData.students.push(student);
+        formData.students.push(students.find(student => student.enrollment === selectedStudent));
         formData.students.sort((a, b) => a.name.localeCompare(b.name));
         renderStudents();
     } catch (error) {
         window.alert(`Ops, algo deu errado. Por favor, tente novamente em instantes. Informações sobre o erro: ${error}`);
     } finally {
         closeModal();
-        qs("#add-student").value = "";
     }
 }
 
 checkAuthorization();
 qs("#save-button").addEventListener("click", saveClassroom);
-qs("#add-students").addEventListener("click", openModal);
+qs("#add-students").addEventListener("click", setStudents);
 qs("#add-student-button").addEventListener("click", addStudent);
 getInformation();
+setTeachers();

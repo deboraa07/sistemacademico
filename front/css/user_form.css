@@ -1,3 +1,7 @@
+option:disabled {
+    display: none;
+}
+
 .user-form {
     display: flex;
     flex-direction: column;
@@ -27,7 +31,7 @@
     gap: 16px;
 }
 
-.user-form-input input {
+.user-form-input input, select {
     color: var(--primary-black);
     height: 48px;
     background-color: var(--secondary-background-color);

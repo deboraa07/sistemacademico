@@ -1,4 +1,4 @@
-.students-flex {
+.see-students-flex {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -9,7 +9,7 @@
     padding: 0 10px;
 }
 
-#students {
+#see-students {
     display: flex;
     flex-direction: column;
     gap: 36px;
@@ -22,7 +22,7 @@
     padding: 12px 24px;
 }
 
-#students-names {
+#see-students-names {
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -38,6 +38,10 @@
     width: 100%;
     padding: 12px;
     outline: none;
+}
+
+#students {
+    width: 100%;
 }
 
 #add-student-button {

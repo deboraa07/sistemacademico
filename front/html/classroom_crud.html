@@ -23,7 +23,7 @@
             </div>
             <div>
                 <label for="teacher">Professor</label>
-                <input type="text" id="teacher" name="teacher">
+                <select name="teacher" id="teacher"></select>
             </div>
             <div>
                 <label for="image">Imagem</label>
@@ -31,12 +31,12 @@
             </div>
         </div>
 
-        <div id="students">
-            <div class="students-flex">
-                <label for="students">Alunos da turma</label>
+        <div id="see-students">
+            <div class="see-students-flex">
+                <label for="see-students">Alunos da turma</label>
                 <button id="add-students" type="button">Adicionar aluno</button>
             </div>
-            <div id="students-names"></div>
+            <div id="see-students-names"></div>
         </div>
         <div class="user-form-button">
             <a href="./classrooms.html">Cancelar</a>
@@ -47,7 +47,8 @@
     <div class="modal">
         <div class="modal-background"></div>
         <div class="modal-content">
-            <input id="add-student" name="addStudent">
+            <label for="students">Aluno</label>
+            <select name="students" id="students"></select>
             <button id="add-student-button" type="button">Adicionar aluno</button>
         </div>
     </div>

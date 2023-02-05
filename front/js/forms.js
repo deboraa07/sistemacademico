@@ -7,6 +7,12 @@ const getInputs = () => {
         .reduce((object, input) => ({...object, [input.name]: input.value}), {});
 }
 
+const getSelects = (notIn) => {
+    return Array.from(document.querySelectorAll("form select"))
+        .filter(select => select.name !== "students")
+        .reduce((object, select) => ({...object, [select.name]: Array.from(select.options).find(option => option.selected).value}), {});
+}
+
 const validateInputs = data => {
     const keys = Object.keys(data);
     const validations = inputValidationFunctions();
@@ -26,7 +32,7 @@ const generateInputsWarning = inputsWithIssues => {
 }
 
 const getAndValidateForm = () => {
-    const data = getInputs();
+    const data = {...getInputs(), ...getSelects(["students"])};
     const inputsWithIssues = validateInputs(data);
 
     if (inputsWithIssues){

@@ -1,5 +1,15 @@
 import { baseLocalUrl } from "./constants.js";
 
+const getToken = () => {
+    const cookies = document.cookie;
+
+    if (!cookies.includes("token=")) return null;
+
+    return cookies.split("token=")[1].split(";")[0];
+}
+
+const checkAuthorization = () => getToken() ? null : window.location.href = `${baseLocalUrl}`;
+
 const closeModal = () => document.querySelector(".modal").style.display = "none";
 const openModal = () => {
     document.querySelector(".modal").style.display = "flex";
@@ -14,20 +24,29 @@ const buildButton = (className, text, onClick) => {
     return button;
 }
 
-const getToken = () => {
-    const cookies = document.cookie;
-
-    if (!cookies.includes("token=")) return null;
-
-    return cookies.split("token=")[1].split(";")[0];
+const buildOption = (text, value, selected) => {
+    const option = document.createElement("option");
+    option.textContent = text;
+    option.value = value;
+    option.selected = selected;
+    return option;
 }
 
-const checkAuthorization = () => getToken() ? null : window.location.href = `${baseLocalUrl}`;
+const buildDefaultOption = text => {
+    const defaultOption = document.createElement("option");
+    defaultOption.textContent = text;
+    defaultOption.value = "";
+    defaultOption.selected = "true";
+    defaultOption.disabled = "true";
+    return defaultOption;
+}
 
 export {
+    getToken,
+    checkAuthorization,
     closeModal,
     openModal,
     buildButton,
-    getToken,
-    checkAuthorization
+    buildOption,
+    buildDefaultOption
 };
