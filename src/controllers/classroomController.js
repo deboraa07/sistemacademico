@@ -35,8 +35,8 @@ const createClassroom = async (req, res) => {
     }
 
     try {
-        const { name, image, teacher, semester } = body
-        const classroom = await Classroom.create({ name, image, teacher, students: [], semester });
+        const { name, image, teacher, semester, students } = body
+        const classroom = await Classroom.create({ name, image, teacher, students , semester });
 
         res.status(201).json(classroom);
     } catch (error) {
