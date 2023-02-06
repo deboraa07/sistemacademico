@@ -3,7 +3,6 @@ import dotenv from 'dotenv'
 dotenv.config();
 
 const checkAuth = async (req,res,next) => {
-    console.log('Começou Checagem')
 
     const token = req.headers['authorization'];
     if(!token){
