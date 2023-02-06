@@ -1,4 +1,6 @@
-const baseLocalUrl = "http://127.0.0.1:5500/";
+import { getBaseUrl } from "./utils.js";
+
+const baseLocalUrl = getBaseUrl();
 const localStorageClassroomKey = "classroomInformation";
 const localStorageUserKey = "userInformation";
 
