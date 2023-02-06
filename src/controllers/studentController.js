@@ -1,4 +1,5 @@
 import Student from "../models/studentModel.js";
+import Classroom from "../models/classroomModel.js";
 
 const createStudent = async (req, res) => {
     const { name, registration, email, phoneNumber } = req.body;
@@ -52,6 +53,8 @@ const deleteStudent = async (req, res) => {
     const student = await Student.findOneAndDelete({ registration });
 
     if(!student) return res.status(404).json({ error: 'No such student' });
+
+    await Classroom.updateMany({ students: registration }, { $pull: { students: registration } });
 
     res.status(200).json(student);
 }

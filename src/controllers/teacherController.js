@@ -1,4 +1,5 @@
 import Teacher from "../models/teacherModel.js";
+import Classroom from "../models/classroomModel.js";
 
 const createTeacher = async (req, res) => {
     const { name, registration, email, phoneNumber } = req.body;
@@ -49,9 +50,11 @@ const updateTeacher = async (req, res) => {
 const deleteTeacher = async (req, res) => {
     const { registration } = req.params;
 
-    const teacher = await Teacher.findOneAndDelete(registration);
+    const teacher = await Teacher.findOneAndDelete({ registration });
 
     if(!teacher) return res.status(404).json({ error: 'No such teacher' });
+
+    await Classroom.deleteMany({ teacher: registration });
 
     res.status(200).json(teacher);
 }
